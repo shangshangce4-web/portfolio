@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#15233D">
+    <meta name="description" content="尚策 Cream 的电商直播运营个人作品集">
+    <title>尚策 CREAM | 电商直播运营专家</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Anton&family=Noto+Sans+SC:wght@300;400;500;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'anton': ['Anton', 'sans-serif'],
+                        'script': ['Alex Brush', 'cursive'],
+                        'oswald': ['Oswald', 'sans-serif'],
+                        'sans': ['Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            900: '#15233D',
+                            800: '#1D3054',
+                        },
+                        maroon: {
+                            700: '#8B2636',
+                        },
+                        bgray: '#EBEFF3',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.92)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        photoWobble: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-25px) rotate(-4deg)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'scale-in': 'scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards',
+                        'photo-wobble': 'photoWobble 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            background-color: #EBEFF3;
+            overflow-x: hidden;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        html {
+            overflow-x: hidden;
+            scroll-padding-top: 1rem;
+        }
+        img, video, iframe {
+            max-width: 100%;
+        }
+        a, button, [onclick] {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        p, li, span, div {
+            overflow-wrap: break-word;
+        }
+        .editorial-card {
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .editorial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .dots-decor::before {
+            content: "•••";
+            position: absolute;
+            top: 1.2rem;
+            left: 1.5rem;
+            font-size: 1.5rem;
+            line-height: 1;
+            letter-spacing: 0.1em;
+            color: #15233D;
+            opacity: 0.5;
+            font-family: serif;
+        }
+        .starburst-bg {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%238B2636' d='M50 0 L58 35 L93 25 L68 50 L93 75 L58 65 L50 100 L42 65 L7 75 L32 50 L7 25 L42 35 Z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* 手机端专项优化 */
+        @media (max-width: 640px) {
+            header nav {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 0.35rem !important;
+                overflow-x: auto;
+                padding: 0.2rem 0 0.45rem;
+                scroll-snap-type: x proximity;
+                -webkit-overflow-scrolling: touch;
+            }
+            header nav a {
+                flex: 0 0 auto;
+                min-height: 44px;
+                display: inline-flex !important;
+                align-items: center;
+                padding: 0 0.85rem;
+                border-radius: 999px;
+                background: #F4F6F8;
+                font-size: 0.78rem;
+                letter-spacing: 0.08em;
+                scroll-snap-align: start;
+            }
+            .editorial-card {
+                border-radius: 1.35rem !important;
+            }
+            .editorial-card:hover {
+                transform: none;
+            }
+            #pdf-container {
+                padding: max(4.5rem, env(safe-area-inset-top)) 0.65rem 0.65rem;
+            }
+            footer a {
+                min-height: 52px;
+            }
+        }
+
+        @media (hover: none) {
+            .editorial-card:hover,
+            a:hover,
+            [onclick]:hover {
+                transform: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="bg-white rounded-b-[2.5rem] md:rounded-b-[4rem] shadow-sm pb-8 md:pb-12 relative z-10 overflow-hidden">
+        <header class="max-w-[1120px] w-[92%] md:w-[88%] mx-auto py-5 md:py-6 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
+            <div class="font-sans font-bold text-xl md:text-2xl tracking-widest text-navy-900 uppercase transition-transform duration-300 hover:scale-105 cursor-default">
+                尚策 / cream
+            </div>
+            <nav class="flex gap-5 md:gap-10 text-sm md:text-base font-sans font-medium tracking-widest text-gray-500">
+                <a href="#about" class="inline-block relative py-1 hover:text-navy-900 transition-all duration-300 hover:scale-110 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-navy-900 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">关于</a>
+                <a href="#skills" class="inline-block relative py-1 hover:text-navy-900 transition-all duration-300 hover:scale-110 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-navy-900 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">技能</a>
+                <a href="#experience" class="inline-block relative py-1 hover:text-navy-900 transition-all duration-300 hover:scale-110 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-navy-900 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">工作经历</a>
+                <a href="#evaluation" class="inline-block relative py-1 hover:text-navy-900 transition-all duration-300 hover:scale-110 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:bottom-0 after:left-0 after:bg-navy-900 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">自我评价</a>
+            </nav>
+        </header>
+
+        <section class="max-w-[1120px] w-[92%] md:w-[88%] mx-auto mt-2 md:mt-4 relative flex flex-col items-center justify-center min-h-[380px] md:min-h-[420px]">
+            <h1 class="opacity-0 animate-fade-in-up font-sans font-bold text-[9vw] md:text-[5.5vw] xl:text-[90px] leading-none text-navy-900 uppercase z-10 text-center w-full tracking-tight mb-5 md:mb-8">
+                <span class="inline-block transition-transform duration-500 hover:scale-[1.03] cursor-default">
+                    电商运营 / 直播运营<span class="text-maroon-700 ml-2 inline-block -translate-y-4 md:-translate-y-8 text-[6vw] md:text-[40px] font-anton drop-shadow-none">*</span>
+                </span>
+            </h1>
+
+            <div class="opacity-0 animate-scale-in relative z-20 w-56 md:w-[340px] aspect-square flex justify-center">
+                <div class="animate-photo-wobble w-full h-full relative">
+                    <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZVzBqgwXdxizZ2Nr6MfxQBmi7mf3dRgAC7C4AAnYcGVTRQO0zuDhnED0E.jpg" alt="尚策 Cream" class="w-full h-full object-cover object-center rounded-full border-8 border-white bg-white shadow-2xl contrast-105 brightness-105">
+                    <div class="absolute -bottom-8 md:-bottom-12 -left-6 md:-left-12 z-30 pointer-events-none">
+                        <span class="font-script text-maroon-700 text-[80px] md:text-[140px] leading-none -rotate-12 block transform origin-bottom-left drop-shadow-lg">
+                            cream
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="opacity-0 animate-fade-in-up [animation-delay:400ms] max-w-[1120px] w-[92%] md:w-[88%] mx-auto mt-8 md:mt-12 pt-5 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-5 z-20 relative">
+            <div class="flex flex-col sm:flex-row gap-6 md:gap-12 w-full md:w-auto">
+                <div class="flex items-center gap-3 transition-transform duration-300 hover:scale-105 cursor-default">
+                    <div class="w-10 h-10 rounded-full bg-bgray flex items-center justify-center text-navy-900 shadow-sm">
+                        <i class="ph ph-phone text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5 leading-none">Phone</div>
+                        <div class="font-sans text-sm text-navy-900 font-bold leading-none">13720331782</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 transition-transform duration-300 hover:scale-105 cursor-default">
+                    <div class="w-10 h-10 rounded-full bg-bgray flex items-center justify-center text-navy-900 shadow-sm">
+                        <i class="ph ph-envelope-simple text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5 leading-none">Email</div>
+                        <div class="font-sans text-sm text-navy-900 font-bold leading-none">2547805791@qq.com</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden md:block transition-transform duration-300 hover:scale-105 cursor-default">
+                <div class="font-oswald text-[11px] tracking-widest text-gray-400 uppercase flex items-center gap-2">
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                    </span>
+                    随时到岗 / Available
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-[1120px] w-[92%] md:w-[88%] mx-auto py-6 md:py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 auto-rows-min">
+            
+            <!-- Card 1: 基本信息 -->
+            <div id="about" class="editorial-card bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 lg:col-span-4 relative dots-decor h-full">
+                <h2 class="font-sans font-bold text-2xl md:text-3xl text-navy-900 mt-2 mb-6 tracking-wide">基本信息</h2>
+                <div class="grid grid-cols-2 gap-y-4 gap-x-3">
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5">Gender / 性别</div>
+                        <div class="font-sans text-[13px] text-navy-900 font-medium">女</div>
+                    </div>
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5">Age / 年龄</div>
+                        <div class="font-sans text-[13px] text-navy-900 font-medium">24 岁</div>
+                    </div>
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5">Experience / 经验</div>
+                        <div class="font-sans text-[13px] text-navy-900 font-medium">1年+ 电商经验</div>
+                    </div>
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5">Salary / 期望薪资</div>
+                        <div class="font-sans text-[13px] text-maroon-700 font-bold">9k+</div>
+                    </div>
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5">Location / 住址</div>
+                        <div class="font-sans text-[13px] text-navy-900 font-medium">上海市 - 九亭</div>
+                    </div>
+                    <div>
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5">Status / 状态</div>
+                        <div class="font-sans text-[13px] text-navy-900 font-medium">离职，随时到岗</div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-0.5">Target / 求职意向</div>
+                        <div class="font-sans text-[13px] text-navy-900 font-medium">直播运营 / 主播助理 / 直播中控 / 助播</div>
+                    </div>
+                    <div class="col-span-2 border-t border-gray-100 pt-4 mt-1">
+                        <div class="font-oswald text-[10px] tracking-widest text-gray-400 uppercase mb-1.5">Education / 教育背景</div>
+                        <div class="flex justify-between items-end mb-1">
+                            <div class="font-sans text-[14px] text-navy-900 font-bold">江汉大学</div>
+                            <div class="font-sans text-[11px] text-gray-400 font-medium">2020.9 - 2024.9</div>
+                        </div>
+                        <div class="font-sans text-[12px] text-navy-900 font-medium mb-2">室内设计专业 / 本科</div>
+                        <p class="font-sans text-[11.5px] text-gray-500 font-light leading-relaxed text-justify">
+                            在校期间担任江汉大学设计学院环艺设计的工作室社团负责人，荣获米兰设计比赛国赛一等奖等诸多设计奖项；曾获院级脱口秀第三名、校级作文比赛二等奖、“新生杯”辩论赛最佳辩手。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: 个人技能 -->
+            <div id="skills" class="editorial-card bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 lg:col-span-8 relative dots-decor flex flex-col justify-center">
+                <div class="flex justify-between items-end mt-2 mb-6">
+                    <h2 class="font-sans font-bold text-2xl md:text-3xl text-navy-900 tracking-wide uppercase leading-none">个人技能</h2>
+                    <div class="w-5 h-5 starburst-bg opacity-80 hidden sm:block"></div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-4 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 01. 软件技能 / Software
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                        <div class="bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-bgray transition-colors">
+                            <div class="text-maroon-700 mb-2.5"><i class="ph ph-pen-nib text-2xl"></i></div>
+                            <div class="font-sans font-bold text-navy-900 text-[13px] mb-1">平面设计</div>
+                            <div class="font-oswald text-[11px] text-gray-500 uppercase tracking-wide">Photoshop / Illustrator</div>
+                        </div>
+                        <div class="bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-bgray transition-colors">
+                            <div class="text-maroon-700 mb-2.5"><i class="ph ph-video-camera text-2xl"></i></div>
+                            <div class="font-sans font-bold text-navy-900 text-[13px] mb-1">视频剪辑</div>
+                            <div class="font-oswald text-[11px] text-gray-500 uppercase tracking-wide">剪映 (CapCut)</div>
+                        </div>
+                        <div class="bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-bgray transition-colors">
+                            <div class="text-maroon-700 mb-2.5"><i class="ph ph-cube text-2xl"></i></div>
+                            <div class="font-sans font-bold text-navy-900 text-[13px] mb-1">三维建模</div>
+                            <div class="font-oswald text-[11px] text-gray-500 uppercase tracking-wide">SketchUp / 3DMax</div>
+                        </div>
+                        <div class="bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-bgray transition-colors">
+                            <div class="text-maroon-700 mb-2.5"><i class="ph ph-sparkle text-2xl"></i></div>
+                            <div class="font-sans font-bold text-navy-900 text-[13px] mb-1">AI 辅助工具</div>
+                            <div class="font-oswald text-[11px] text-gray-500 uppercase tracking-wide">Codex / Gemini</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-4 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 02. 设计作品集 / Portfolio PDF
+                    </h3>
+                    <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbaZqhQtDFFFeVtHfF3iVOg1wsrNN5QACFiQAArakKVRKLJ38ZIfYmT0E.pdf')" class="block border border-gray-200 border-dashed rounded-2xl p-5 hover:border-navy-900 hover:bg-gray-50 transition-all group duration-300 cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                                    <i class="ph ph-file-pdf text-3xl"></i>
+                                </div>
+                                <div>
+                                    <div class="font-sans text-[13px] font-bold text-navy-900 mb-0.5 group-hover:text-maroon-700 transition-colors">尚策_个人设计作品集.pdf</div>
+                                    <div class="font-sans text-[11px] text-gray-400 font-light">包含室内设计、直播间视觉作品 (点击在线预览)</div>
+                                </div>
+                            </div>
+                            <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-navy-900 group-hover:text-white group-hover:border-navy-900 transition-all shadow-sm">
+                                <i class="ph ph-eye text-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 03. 剪辑作品展示 -->
+                <div>
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-4 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 03. 剪辑作品展示 / Video Editing
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                        <div class="aspect-[9/16] bg-black rounded-xl overflow-hidden shadow-sm relative group">
+                            <video src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbb1qhQ4O8Vh0nyJLgAuCZHpxJneniAACLiQAArakKVTOiJK3p_ZEsD0E.mp4" controls playsinline class="w-full h-full object-cover" preload="metadata"></video>
+                        </div>
+                        <div class="aspect-[9/16] bg-black rounded-xl overflow-hidden shadow-sm relative group">
+                            <video src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbflqhQ_el8Yo43n5ff7vQ5M4bkJmjQACdSQAArakKVTsbNwZXf5EYD0E.mp4" controls playsinline class="w-full h-full object-cover" preload="metadata"></video>
+                        </div>
+                        <div class="aspect-[9/16] bg-black rounded-xl overflow-hidden shadow-sm relative group">
+                            <video src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbg9qhRFfWCvDbUfyiLb3Bzl5T7Le7QACjSQAArakKVTXECizGlz0gz0E.mp4" controls playsinline class="w-full h-full object-cover" preload="metadata"></video>
+                        </div>
+                        <div class="aspect-[9/16] bg-black rounded-xl overflow-hidden shadow-sm relative group">
+                            <video src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbhVqhRIHh7CcNvHa1nJB1SqGzrMahAACkyQAArakKVQcMoI-WaMRSz0E.mp4" controls playsinline class="w-full h-full object-cover" preload="metadata"></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: 工作技能 (原 Case Study) -->
+            <div id="case" class="editorial-card bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 lg:col-span-4 lg:row-span-2 relative dots-decor h-full">
+                <div class="flex justify-between items-end mt-2 mb-6">
+                    <h2 class="font-sans font-bold text-2xl md:text-3xl text-navy-900 tracking-wide uppercase leading-none">工作技能</h2>
+                    <div class="w-5 h-5 starburst-bg opacity-80 hidden sm:block"></div>
+                </div>
+
+                <!-- 01. 话术脚本撰写 -->
+                <div class="mb-8">
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-4 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 01. 话术脚本撰写 / Script Writing
+                    </h3>
+                    <div class="flex flex-col gap-3">
+                        <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbtlqhRl7GAABwAyfiaCudBcsam3_CqcAAmYlAAK2pClUXu6UU4A62jA9BA.pdf')" class="block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <div class="font-sans font-bold text-navy-900 text-[13px] flex items-center gap-2">
+                                    <i class="ph ph-diamond text-maroon-700 text-lg group-hover:scale-110 transition-transform"></i>
+                                    古玩珠宝直播脚本
+                                </div>
+                                <div class="text-[10px] text-maroon-700 bg-red-50 px-2 py-0.5 rounded font-sans font-medium flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity border border-red-100">
+                                    <i class="ph ph-eye"></i> 在线预览
+                                </div>
+                            </div>
+                            <p class="font-sans text-[11px] text-gray-500 leading-relaxed text-justify">针对高客单价非标品，设计基于文化故事与工艺价值的塑品话术，快速建立主播专业人设与粉丝信任，拉升场观与客单价。</p>
+                        </div>
+                        
+                        <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbvNqhRrAhpbD3EuHlrlEs0x5lPu4rAACgiUAArakKVR1k-pbcWYVGT0E.pdf')" class="block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <div class="font-sans font-bold text-navy-900 text-[13px] flex items-center gap-2">
+                                    <i class="ph ph-snowflake text-maroon-700 text-lg group-hover:scale-110 transition-transform"></i>
+                                    波司登羽绒服脚本
+                                </div>
+                                <div class="text-[10px] text-maroon-700 bg-red-50 px-2 py-0.5 rounded font-sans font-medium flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity border border-red-100">
+                                    <i class="ph ph-eye"></i> 在线预览
+                                </div>
+                            </div>
+                            <p class="font-sans text-[11px] text-gray-500 leading-relaxed text-justify">结合国民品牌调性与季节性御寒需求，撰写 FABE 卖点梳理与极速过款话术，配合福袋与限时憋单机制高效促成规模化转化。</p>
+                        </div>
+
+                        <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbv9qhRuhY58TUTBaQJt7Wpwu2ngMbQACjiUAArakKVQ8F1Ac3j_x3D0E.pdf')" class="block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <div class="font-sans font-bold text-navy-900 text-[13px] flex items-center gap-2">
+                                    <i class="ph ph-moon-stars text-maroon-700 text-lg group-hover:scale-110 transition-transform"></i>
+                                    JAHVER 高端枕头脚本
+                                </div>
+                                <div class="text-[10px] text-maroon-700 bg-red-50 px-2 py-0.5 rounded font-sans font-medium flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity border border-red-100">
+                                    <i class="ph ph-eye"></i> 在线预览
+                                </div>
+                            </div>
+                            <p class="font-sans text-[11px] text-gray-500 leading-relaxed text-justify">采用痛点场景代入式话术设计，主打颈椎健康与材质科技，利用直播间沉浸式展示与助眠体验引导，强力击中受众需求从而逼单。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02. 直播间物料制作 -->
+                <div class="mb-8">
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-4 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 02. 直播间物料制作 / Live Assets
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="aspect-[3/4] rounded-xl overflow-hidden border border-gray-100/50 relative group shadow-sm cursor-pointer bg-gray-50/50 flex items-center justify-center p-1.5" onclick="openLightbox('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbwtqhRw8MxKoYkW9z2GBrtklpuxQxQACmiUAArakKVT6f2t6ct0rvD0E.jpg')">
+                            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbwtqhRw8MxKoYkW9z2GBrtklpuxQxQACmiUAArakKVT6f2t6ct0rvD0E.jpg" class="w-full h-full object-contain block group-hover:scale-105 transition-transform duration-500" alt="物料1">
+                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 z-10 pointer-events-none">
+                                <div class="w-10 h-10 bg-white/95 rounded-full flex items-center justify-center text-navy-900 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                    <i class="ph ph-magnifying-glass-plus text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="aspect-[3/4] rounded-xl overflow-hidden border border-gray-100/50 relative group shadow-sm cursor-pointer bg-gray-50/50 flex items-center justify-center p-1.5" onclick="openLightbox('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZb4ZqhR-6Um7w6Vs7-i_jWzlqRMkTrQACFiYAArakKVQO41tV4l-00T0E.jpg')">
+                            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZb4ZqhR-6Um7w6Vs7-i_jWzlqRMkTrQACFiYAArakKVQO41tV4l-00T0E.jpg" class="w-full h-full object-contain block group-hover:scale-105 transition-transform duration-500" alt="物料2">
+                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 z-10 pointer-events-none">
+                                <div class="w-10 h-10 bg-white/95 rounded-full flex items-center justify-center text-navy-900 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                    <i class="ph ph-magnifying-glass-plus text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 03. 线下门店设计 -->
+                <div>
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-4 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 03. 线下门店设计 / Store Design
+                    </h3>
+                    <div class="w-full rounded-xl overflow-hidden border border-gray-100/50 relative group shadow-sm cursor-pointer bg-white" onclick="openLightbox('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZb21qhR8kvIoi1dU_p2EHT_cL1d21DgAC_SUAArakKVSmHiiJToZuJz0E.png')">
+                        <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZb21qhR8kvIoi1dU_p2EHT_cL1d21DgAC_SUAArakKVSmHiiJToZuJz0E.png" class="w-full h-auto block group-hover:scale-105 transition-transform duration-500" alt="门店设计">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 z-10 pointer-events-none">
+                            <div class="w-10 h-10 bg-white/95 rounded-full flex items-center justify-center text-navy-900 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                <i class="ph ph-magnifying-glass-plus text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Photography -->
+            <div id="experience" class="editorial-card bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 lg:col-span-8 relative dots-decor h-full">
+                <div class="flex justify-between items-end mt-2 mb-8">
+                    <h2 class="font-sans font-bold text-2xl md:text-3xl text-navy-900 tracking-wide uppercase leading-none">工作经历</h2>
+                    <div class="w-5 h-5 starburst-bg opacity-80 hidden sm:block"></div>
+                </div>
+
+                <div class="mb-10 relative">
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-5 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 01. 最近工作经历 / Recent Experience
+                    </h3>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 group">
+                        <div class="md:w-[35%] shrink-0">
+                            <div class="font-sans font-bold text-navy-900 text-[15px] mb-1 group-hover:text-maroon-700 transition-colors">轻瞳隐形眼镜旗舰店</div>
+                            <div class="font-sans text-[13px] text-navy-900 font-medium mb-1.5 flex items-center gap-2">
+                                <i class="ph ph-briefcase text-maroon-700"></i> 直播中控 (美妆类目)
+                            </div>
+                            <div class="font-oswald text-[11px] text-gray-400 uppercase tracking-widest bg-gray-100 inline-block px-2 py-0.5 rounded">2025.02 - 2025.06</div>
+                            <div class="font-sans text-[11px] text-maroon-700 font-bold mt-2 bg-red-50 inline-block px-2 py-0.5 rounded">从0-1 起号项目</div>
+                        </div>
+                        <div class="md:w-[65%]">
+                            <ul class="font-sans text-[12.5px] text-gray-500 leading-relaxed text-justify space-y-2.5">
+                                <li class="relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-maroon-700/50 before:rounded-full">
+                                    <span class="font-bold text-navy-800">视觉与场景搭建:</span> 依托环境设计审美，独立完成直播间视觉布局与BGM风格策划，贴合年轻受众偏好，有效拉升自然曝光与停留时长。
+                                </li>
+                                <li class="relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-maroon-700/50 before:rounded-full">
+                                    <span class="font-bold text-navy-800">快节奏场控与流量承接:</span> 熟悉品牌直播间快节奏打法。在微付费投流介入时，精准把控极速流的承接，通过调整福袋、秒杀等营销工具的释放节点，配合主播用主推款/引流款快速憋单转化，最大化提升跑量效率。
+                                </li>
+                                <li class="relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-maroon-700/50 before:rounded-full">
+                                    <span class="font-bold text-navy-800">数据增长与总结:</span> 根据实时流量波动与转化反馈调整运营动作，助力直播间单场曝光从5万增至30万，直播GMV由1800元提升至20000元，通过拉动直播间互动以及短视频投流，三个月成功拉动账号权重。
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-5 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 02. 过往工作经历 / Previous Experience
+                    </h3>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 group">
+                        <div class="md:w-[35%] shrink-0">
+                            <div class="font-sans font-bold text-navy-900 text-[15px] mb-1 group-hover:text-maroon-700 transition-colors">华山论鉴 (陕西卫视蓝V认证)</div>
+                            <div class="font-sans text-[13px] text-navy-900 font-medium mb-1.5 flex items-center gap-2">
+                                <i class="ph ph-briefcase text-maroon-700"></i> 助播 / 运营助理 (古玩类目)
+                            </div>
+                            <div class="font-oswald text-[11px] text-gray-400 uppercase tracking-widest bg-gray-100 inline-block px-2 py-0.5 rounded">2025.06 - 2026.04</div>
+                            <div class="font-sans text-[11px] text-gray-500 mt-2.5 p-2.5 bg-bgray/60 rounded border border-gray-100/80 leading-relaxed">
+                                <span class="font-bold text-navy-900">项目背景:</span> 500万粉丝头部鉴宝达人账号，主营高端藏品(古玩/珠宝)，货品客单价2k-10w，直播4小时，单场GMV 3万左右。
+                            </div>
+                        </div>
+                        <div class="md:w-[65%]">
+                            <ul class="font-sans text-[12.5px] text-gray-500 leading-relaxed text-justify space-y-2.5">
+                                <li class="relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-maroon-700/50 before:rounded-full">
+                                    <span class="font-bold text-navy-800">店铺搭建与商品基建:</span> 负责直播间的底层设施筹备。梳理并搭建后端ERP管理系统，完成非标品(一物一链)的规范化入库、价格盘点、商品链接上架及评级工作。
+                                </li>
+                                <li class="relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-maroon-700/50 before:rounded-full">
+                                    <span class="font-bold text-navy-800">全流程管控与逼单:</span> 负责单场120-200个单品的直播全流程。撰写针对高净值人群的直播话术，负责现场递品、改价防错；在主播离场时可独立替播，成功促成高客单藏品成交。
+                                </li>
+                                <li class="relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-maroon-700/50 before:rounded-full">
+                                    <span class="font-bold text-navy-800">漏斗复盘与策略迭代:</span> 建立每日直播数据复盘机制。通过拆解停留时长、商品点击率、转化率及UV价值等核心指标，精准定位流量漏斗流失点。结合复盘数据反向优化次日的选品结构与排品逻辑。
+                                </li>
+                                <li class="relative pl-3 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1 before:h-1 before:bg-maroon-700/50 before:rounded-full">
+                                    <span class="font-bold text-navy-800">视觉优化与售后:</span> 制作并持续优化直播间贴片等视觉展示物料，提升专业度；配合跟进售后和客户积极沟通，提升高净值粉丝复购率。
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: 直播切片 -->
+            <div class="editorial-card bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 lg:col-span-8 relative dots-decor h-full">
+                <div class="flex justify-between items-end mt-2 mb-8">
+                    <h2 class="font-sans font-bold text-2xl md:text-3xl text-navy-900 tracking-wide uppercase leading-none">直播切片</h2>
+                    <div class="w-5 h-5 starburst-bg opacity-80 hidden sm:block"></div>
+                </div>
+
+                <div class="mb-10 relative">
+                    <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-5 flex items-center gap-2">
+                        <span class="w-4 h-[1px] bg-gray-300"></span> 01. 逼单高光切片 / Highlights
+                    </h3>
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-8 group">
+                        <div class="md:w-[35%] shrink-0">
+                            <div class="font-sans font-bold text-navy-900 text-[15px] mb-1 group-hover:text-maroon-700 transition-colors">高转化瞬间提取</div>
+                            <div class="font-sans text-[12px] text-gray-500 leading-relaxed text-justify mt-2">
+                                截取直播间具有强爆发力、话术密集的逼单高光片段。通过二次包装与节奏加速，打造极具情绪感染力的分发切片。
+                            </div>
+                        </div>
+                        <div class="md:w-[65%] grid grid-cols-2 gap-3">
+                            <!-- 视频占位 1 -->
+                            <div class="aspect-[9/16] bg-black rounded-xl overflow-hidden shadow-sm relative group">
+                                <video src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZeo5qhcQ5ugVVpAbVb8N9k4LmMQ3sbAACtyEAAlXsMVRTMi8XQDhgfT0E.mp4" controls playsinline class="w-full h-full object-cover" preload="metadata"></video>
+                            </div>
+                            <!-- 视频占位 2 -->
+                            <div class="aspect-[9/16] bg-black rounded-xl overflow-hidden shadow-sm relative group">
+                                <video src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZemNqhcDaBUh6hTX0WXwyUeLQ9TyIbQACiCEAAlXsMVSeE-RcItBoHz0E.mp4" controls playsinline class="w-full h-full object-cover" preload="metadata"></video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: 自我评价 -->
+            <div id="evaluation" class="editorial-card bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 lg:col-span-12 relative dots-decor">
+                <div class="flex justify-between items-end mt-2 mb-6 md:mb-8">
+                    <h2 class="font-sans font-bold text-2xl md:text-3xl text-navy-900 tracking-wide uppercase leading-none">自我评价</h2>
+                    <div class="w-5 h-5 starburst-bg opacity-80 hidden sm:block"></div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-center bg-bgray/40 p-6 md:p-8 rounded-2xl border border-gray-100/50 group hover:bg-white hover:shadow-sm transition-all duration-300">
+                    <div class="md:w-[20%] shrink-0 flex flex-col items-center md:items-start text-center md:text-left">
+                        <div class="w-12 h-12 bg-maroon-700 rounded-full flex items-center justify-center text-white mb-3 shadow-md group-hover:scale-110 transition-transform duration-300">
+                            <i class="ph ph-quotes text-2xl"></i>
+                        </div>
+                        <div class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase">Self Evaluation</div>
+                    </div>
+                    <div class="md:w-[80%]">
+                        <p class="font-sans text-[14px] md:text-[15px] text-navy-900 leading-relaxed md:leading-loose text-justify font-medium">
+                            具备 <span class="text-maroon-700 font-bold">1年+电商直播经验</span>，熟悉直播间 <span class="font-bold">场控、中控、助播、货品管理</span>、选品排品、脚本执行、客服沟通和数据复盘。<br><br>
+                            执行力强，能够适应 <span class="text-maroon-700 font-bold">直播节奏和临场变化</span>；具备较好的主播沟通、跨部门协作和 <span class="font-bold">问题处理能力</span>。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="contact" class="max-w-[1120px] w-[92%] md:w-[88%] mx-auto pb-12">
+        <div class="bg-navy-900 rounded-[2rem] p-10 md:p-16 flex flex-col items-center justify-center text-white relative overflow-hidden text-center">
+            <!-- 居中水波纹背景词 -->
+            <div class="absolute inset-0 flex items-center justify-center font-anton text-[150px] md:text-[250px] text-white/[0.03] pointer-events-none leading-none select-none">
+                HIRE
+            </div>
+
+            <div class="relative z-10 flex flex-col items-center">
+                <h2 class="font-sans font-bold text-3xl md:text-4xl text-white mb-2 tracking-wide transition-transform duration-300 hover:scale-105 cursor-default">期待与您的进一步沟通</h2>
+                <p class="font-script text-[32px] md:text-[40px] text-maroon-400 -mt-2 transition-transform duration-300 hover:scale-105 cursor-default">Looking forward to it</p>
+                
+                <div class="mt-8 flex flex-col gap-4 font-sans text-sm md:text-[15px] text-gray-300 items-center">
+                    <div class="flex items-center gap-3 justify-center transition-transform duration-300 hover:scale-105 cursor-default">
+                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-maroon-400">
+                            <i class="ph ph-phone text-xl"></i>
+                        </div>
+                        <span class="tracking-wider flex items-center">13720331782 <span class="text-[11px] text-gray-400 ml-2 bg-white/10 px-2.5 py-1 rounded-full">(微信同号)</span></span>
+                    </div>
+                    <div class="flex items-center gap-3 justify-center transition-transform duration-300 hover:scale-105 cursor-default">
+                        <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-maroon-400">
+                            <i class="ph ph-envelope-simple text-xl"></i>
+                        </div>
+                        <span class="tracking-wider">2547805791@qq.com</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative z-10 flex flex-col sm:flex-row gap-5 w-full sm:w-auto mt-10 justify-center">
+                <a href="tel:13720331782" class="bg-white text-navy-900 px-10 py-4 rounded-full font-sans font-bold text-[14px] tracking-widest hover:bg-gray-100 transition-colors text-center flex items-center justify-center gap-2 shadow-xl group">
+                    <i class="ph ph-phone-call text-xl group-hover:scale-110 transition-transform"></i> 拨打电话
+                </a>
+                <a href="mailto:2547805791@qq.com" class="border border-white/30 text-white px-10 py-4 rounded-full font-sans font-bold text-[14px] tracking-widest hover:bg-white hover:text-navy-900 transition-colors text-center flex items-center justify-center gap-2 group">
+                    <i class="ph ph-envelope-open text-xl group-hover:scale-110 transition-transform"></i> 发送邮件
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center text-xs font-oswald tracking-widest text-gray-400 uppercase transition-transform duration-300 hover:scale-105 cursor-default">
+            © 2026 SHANGCE CREAM. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+
+    <!-- 全屏图片查看器 (Lightbox Modal) -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0" onclick="closeLightbox()">
+        <div class="absolute top-6 right-6 w-10 h-10 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center text-white cursor-pointer transition-colors z-[101]" onclick="closeLightbox(event)">
+            <i class="ph ph-x text-xl"></i>
+        </div>
+        <img id="lightbox-img" src="" class="w-full h-full p-4 md:p-8 object-contain scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- 全屏 PDF 查看器 (PDF Modal) -->
+    <div id="pdf-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0" onclick="closePdfModal()">
+        <div class="absolute top-6 right-6 w-10 h-10 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center text-white cursor-pointer transition-colors z-[101]" onclick="closePdfModal(event)">
+            <i class="ph ph-x text-xl"></i>
+        </div>
+        <div id="pdf-container" class="w-full h-full p-4 pt-20 md:p-10 max-w-5xl mx-auto" onclick="event.stopPropagation()">
+            <!-- PDF 内容将通过 JS 动态注入，强制在线预览 -->
+        </div>
+    </div>
+
+    <script>
+        // PDF 查看器控制逻辑
+        async function openPdfModal(pdfSrc) {
+            // 手机上直接用浏览器打开 PDF，缩放和分享更稳定。
+            if (window.matchMedia('(max-width: 767px)').matches) {
+                window.location.href = pdfSrc;
+                return;
+            }
+
+            const modal = document.getElementById('pdf-modal');
+            const container = document.getElementById('pdf-container');
+            
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            modal.classList.remove('opacity-0');
+            document.body.style.overflow = 'hidden';
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-full text-white/80">
+                    <i class="ph ph-spinner animate-spin text-[3rem] mb-4"></i>
+                    <p class="font-sans text-sm tracking-widest font-medium mt-4">正在加载高清文件...</p>
+                </div>
+            `;
+
+            // 直接采用高可用云端网页内嵌/Google Docs Viewer 渲染方案，彻底规避跨域 403 拦截与 Canvas 渲染慢的问题
+            setTimeout(() => {
+                const googleViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfSrc)}&embedded=true`;
+                container.innerHTML = `
+                    <div class="w-full h-full bg-white rounded-2xl overflow-hidden shadow-2xl relative flex flex-col">
+                        <div class="bg-white/95 backdrop-blur px-4 md:px-6 py-3 border-b border-gray-100 flex justify-between items-center z-[100] absolute top-0 left-0 right-0 shadow-sm">
+                            <span class="text-[13px] font-bold text-navy-900 flex items-center gap-2">
+                                <i class="ph ph-file-pdf text-maroon-700 text-xl"></i> 文档安全预览
+                            </span>
+                            <a href="${pdfSrc}" target="_blank" class="text-[11px] font-bold bg-navy-900 text-white px-4 py-1.5 rounded-full hover:bg-maroon-700 transition-colors shadow-sm flex items-center gap-1.5">
+                                原件直达 <i class="ph ph-arrow-square-out text-sm"></i>
+                            </a>
+                        </div>
+                        <iframe src="${googleViewerUrl}" width="100%" height="100%" frameborder="0" class="absolute inset-0 pt-14"></iframe>
+                    </div>
+                `;
+            }, 300);
+        }
+
+        function closePdfModal(e) {
+            if (e) e.stopPropagation();
+            const modal = document.getElementById('pdf-modal');
+            const container = document.getElementById('pdf-container');
+            modal.classList.add('opacity-0');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                container.innerHTML = ''; // 清除节点，释放内存
+            }, 300);
+        }
+
+        // 图片查看器控制逻辑
+        function openLightbox(imgSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imgSrc;
+            lightbox.classList.remove('hidden');
+            // 触发重绘以激活CSS过渡
+            void lightbox.offsetWidth; 
+            lightbox.classList.remove('opacity-0');
+            lightboxImg.classList.replace('scale-95', 'scale-100');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        }
+
+        function closeLightbox(e) {
+            if (e) e.stopPropagation();
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightbox.classList.add('opacity-0');
+            lightboxImg.classList.replace('scale-100', 'scale-95');
+            document.body.style.overflow = ''; // 恢复背景滚动
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
