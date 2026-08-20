@@ -14,9 +14,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Anton&family=Noto+Sans+SC:wght@300;400;500;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    <script type="module">
+        import * as pdfjsLib from './pdf.min.mjs';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('./pdf.worker.min.mjs', import.meta.url).href;
+        window.pdfjsLib = pdfjsLib;
+        window.dispatchEvent(new Event('pdfjsready'));
     </script>
 
     <script>
@@ -696,6 +698,17 @@
         let currentPdfPage = 1;
         let currentPdfDocument = null;
 
+        function waitForPdfJs() {
+            if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+            return new Promise((resolve, reject) => {
+                const timeout = setTimeout(() => reject(new Error('PDF reader failed to initialize')), 15000);
+                window.addEventListener('pdfjsready', () => {
+                    clearTimeout(timeout);
+                    resolve(window.pdfjsLib);
+                }, { once: true });
+            });
+        }
+
         async function openPdfModal(pdfSrc, pdfTitle = '文档预览') {
             const modal = document.getElementById('pdf-modal');
             const pages = document.getElementById('pdf-pages');
@@ -723,7 +736,8 @@
             document.body.style.overflow = 'hidden';
 
             try {
-                const pdf = await pdfjsLib.getDocument(pdfSrc).promise;
+                const pdfReader = await waitForPdfJs();
+                const pdf = await pdfReader.getDocument(pdfSrc).promise;
                 if (renderId !== activePdfRender) return;
                 currentPdfDocument = pdf;
                 await renderCurrentPdfPage(renderId);
