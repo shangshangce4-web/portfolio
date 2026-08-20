@@ -776,7 +776,7 @@
                 shell.dataset.pageNumber = pageNumber;
                 shell.dataset.pageLabel = `第 ${pageNumber} 页`;
                 shell.setAttribute('aria-label', `第 ${pageNumber} 页`);
-                shell.style.aspectRatio = '1.414 / 1';
+                shell.style.aspectRatio = '1 / 1.414';
                 const img = document.createElement('img');
                 img.className = 'mobile-pdf-page';
                 img.alt = `第 ${pageNumber} 页`;
@@ -836,15 +836,10 @@
             document.body.style.overflow = 'hidden';
 
             try {
-                if (isMobilePreview) {
-                    buildMobilePdfPages(pdfSrc, renderId);
-                    return;
-                }
-                const pdfReader = await waitForPdfJs();
-                const pdf = await pdfReader.getDocument(pdfSrc).promise;
-                if (renderId !== activePdfRender) return;
-                currentPdfDocument = pdf;
-                await buildContinuousPdfPages(renderId);
+                // Use the rendered page images on every device. This avoids browser-specific
+                // PDF.js/worker failures while keeping the preview inside the page.
+                buildMobilePdfPages(pdfSrc, renderId);
+                return;
             } catch (error) {
                 if (renderId !== activePdfRender) return;
                 pages.innerHTML = `
