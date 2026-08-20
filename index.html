@@ -14,6 +14,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Anton&family=Noto+Sans+SC:wght@300;400;500;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
 
     <script>
         tailwind.config = {
@@ -112,6 +116,19 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+        }
+        .pdf-page {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 1rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+        }
+        #pdf-pages {
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* 手机端专项优化 */
@@ -324,7 +341,7 @@
                     <h3 class="font-oswald text-[11px] tracking-wider text-gray-400 uppercase mb-4 flex items-center gap-2">
                         <span class="w-4 h-[1px] bg-gray-300"></span> 02. 设计作品集 / Portfolio PDF
                     </h3>
-                    <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbaZqhQtDFFFeVtHfF3iVOg1wsrNN5QACFiQAArakKVRKLJ38ZIfYmT0E.pdf')" class="block border border-gray-200 border-dashed rounded-2xl p-5 hover:border-navy-900 hover:bg-gray-50 transition-all group duration-300 cursor-pointer">
+                    <button type="button" onclick="openPdfModal('./作品集.pdf', '尚策_个人设计作品集.pdf')" class="w-full text-left block border border-gray-200 border-dashed rounded-2xl p-5 hover:border-navy-900 hover:bg-gray-50 transition-all group duration-300 cursor-pointer">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
@@ -332,14 +349,14 @@
                                 </div>
                                 <div>
                                     <div class="font-sans text-[13px] font-bold text-navy-900 mb-0.5 group-hover:text-maroon-700 transition-colors">尚策_个人设计作品集.pdf</div>
-                                    <div class="font-sans text-[11px] text-gray-400 font-light">包含室内设计、直播间视觉作品 (点击在线预览)</div>
+                                    <div class="font-sans text-[11px] text-gray-400 font-light">包含室内设计、直播间视觉作品（点击打开文档）</div>
                                 </div>
                             </div>
                             <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-navy-900 group-hover:bg-navy-900 group-hover:text-white group-hover:border-navy-900 transition-all shadow-sm">
                                 <i class="ph ph-eye text-lg"></i>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
 
                 <!-- 03. 剪辑作品展示 -->
@@ -377,44 +394,44 @@
                         <span class="w-4 h-[1px] bg-gray-300"></span> 01. 话术脚本撰写 / Script Writing
                     </h3>
                     <div class="flex flex-col gap-3">
-                        <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbtlqhRl7GAABwAyfiaCudBcsam3_CqcAAmYlAAK2pClUXu6UU4A62jA9BA.pdf')" class="block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
+                        <button type="button" onclick="openPdfModal('./1、张老师话术框架.pdf', '古玩珠宝直播脚本')" class="w-full text-left block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
                             <div class="flex items-center justify-between mb-1.5">
                                 <div class="font-sans font-bold text-navy-900 text-[13px] flex items-center gap-2">
                                     <i class="ph ph-diamond text-maroon-700 text-lg group-hover:scale-110 transition-transform"></i>
                                     古玩珠宝直播脚本
                                 </div>
                                 <div class="text-[10px] text-maroon-700 bg-red-50 px-2 py-0.5 rounded font-sans font-medium flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity border border-red-100">
-                                    <i class="ph ph-eye"></i> 在线预览
+                                    <i class="ph ph-file-pdf"></i> 打开文档
                                 </div>
                             </div>
                             <p class="font-sans text-[11px] text-gray-500 leading-relaxed text-justify">针对高客单价非标品，设计基于文化故事与工艺价值的塑品话术，快速建立主播专业人设与粉丝信任，拉升场观与客单价。</p>
-                        </div>
+                        </button>
                         
-                        <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbvNqhRrAhpbD3EuHlrlEs0x5lPu4rAACgiUAArakKVR1k-pbcWYVGT0E.pdf')" class="block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
+                        <button type="button" onclick="openPdfModal('./商务鹅绒话术参考(1).pdf', '波司登羽绒服脚本')" class="w-full text-left block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
                             <div class="flex items-center justify-between mb-1.5">
                                 <div class="font-sans font-bold text-navy-900 text-[13px] flex items-center gap-2">
                                     <i class="ph ph-snowflake text-maroon-700 text-lg group-hover:scale-110 transition-transform"></i>
                                     波司登羽绒服脚本
                                 </div>
                                 <div class="text-[10px] text-maroon-700 bg-red-50 px-2 py-0.5 rounded font-sans font-medium flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity border border-red-100">
-                                    <i class="ph ph-eye"></i> 在线预览
+                                    <i class="ph ph-file-pdf"></i> 打开文档
                                 </div>
                             </div>
                             <p class="font-sans text-[11px] text-gray-500 leading-relaxed text-justify">结合国民品牌调性与季节性御寒需求，撰写 FABE 卖点梳理与极速过款话术，配合福袋与限时憋单机制高效促成规模化转化。</p>
-                        </div>
+                        </button>
 
-                        <div onclick="openPdfModal('https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEZbv9qhRuhY58TUTBaQJt7Wpwu2ngMbQACjiUAArakKVQ8F1Ac3j_x3D0E.pdf')" class="block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
+                        <button type="button" onclick="openPdfModal('./开播话术拆解.pdf', 'JAHVER 高端枕头脚本')" class="w-full text-left block bg-bgray/60 rounded-xl p-4 border border-gray-100/50 hover:bg-white hover:border-gray-200 hover:shadow-sm transition-all group cursor-pointer relative overflow-hidden">
                             <div class="flex items-center justify-between mb-1.5">
                                 <div class="font-sans font-bold text-navy-900 text-[13px] flex items-center gap-2">
                                     <i class="ph ph-moon-stars text-maroon-700 text-lg group-hover:scale-110 transition-transform"></i>
                                     JAHVER 高端枕头脚本
                                 </div>
                                 <div class="text-[10px] text-maroon-700 bg-red-50 px-2 py-0.5 rounded font-sans font-medium flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity border border-red-100">
-                                    <i class="ph ph-eye"></i> 在线预览
+                                    <i class="ph ph-file-pdf"></i> 打开文档
                                 </div>
                             </div>
                             <p class="font-sans text-[11px] text-gray-500 leading-relaxed text-justify">采用痛点场景代入式话术设计，主打颈椎健康与材质科技，利用直播间沉浸式展示与助眠体验引导，强力击中受众需求从而逼单。</p>
-                        </div>
+                        </button>
                     </div>
                 </div>
 
@@ -639,69 +656,162 @@
     </div>
 
     <!-- 全屏 PDF 查看器 (PDF Modal) -->
-    <div id="pdf-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden flex-col items-center justify-center transition-opacity duration-300 opacity-0" onclick="closePdfModal()">
-        <div class="absolute top-6 right-6 w-10 h-10 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center text-white cursor-pointer transition-colors z-[101]" onclick="closePdfModal(event)">
-            <i class="ph ph-x text-xl"></i>
+    <div id="pdf-modal" class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md hidden flex-col transition-opacity duration-300 opacity-0" role="dialog" aria-modal="true" aria-labelledby="pdf-title">
+        <div class="h-16 md:h-[4.5rem] shrink-0 bg-navy-900 text-white px-3 md:px-6 flex items-center justify-between gap-3 shadow-lg z-[102] pt-[env(safe-area-inset-top)]">
+            <div class="min-w-0 flex items-center gap-2 md:gap-3">
+                <i class="ph ph-file-pdf text-red-300 text-xl md:text-2xl shrink-0"></i>
+                <div class="min-w-0">
+                    <div id="pdf-title" class="font-sans font-bold text-xs md:text-sm truncate">文档预览</div>
+                    <div id="pdf-progress" class="font-sans text-[10px] md:text-[11px] text-white/60 mt-0.5">准备加载</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-1.5 md:gap-2 shrink-0">
+                <button type="button" id="pdf-prev" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="上一页">
+                    <i class="ph ph-caret-left text-lg"></i>
+                </button>
+                <button type="button" id="pdf-next" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="下一页">
+                    <i class="ph ph-caret-right text-lg"></i>
+                </button>
+                <button type="button" id="pdf-zoom-out" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="缩小文档">
+                    <i class="ph ph-minus text-lg"></i>
+                </button>
+                <button type="button" id="pdf-zoom-in" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="放大文档">
+                    <i class="ph ph-plus text-lg"></i>
+                </button>
+                <button type="button" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" onclick="closePdfModal(event)" aria-label="关闭文档">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
         </div>
-        <div id="pdf-container" class="w-full h-full p-4 pt-20 md:p-10 max-w-5xl mx-auto" onclick="event.stopPropagation()">
-            <!-- PDF 内容将通过 JS 动态注入，强制在线预览 -->
+        <div id="pdf-pages" class="flex-1 overflow-auto px-2 py-3 md:px-6 md:py-6" onclick="event.stopPropagation()">
+            <!-- PDF 页面由 PDF.js 渲染到 Canvas -->
         </div>
     </div>
 
     <script>
-        // PDF 查看器控制逻辑
-        async function openPdfModal(pdfSrc) {
-            // 手机上直接用浏览器打开 PDF，缩放和分享更稳定。
-            if (window.matchMedia('(max-width: 767px)').matches) {
-                window.location.href = pdfSrc;
-                return;
-            }
+        // PDF.js 全屏查看器：电脑和手机都留在网页内预览。
+        let activePdfRender = 0;
+        let activePdf = null;
+        let pdfScale = 1;
+        let currentPdfPage = 1;
+        let currentPdfDocument = null;
 
+        async function openPdfModal(pdfSrc, pdfTitle = '文档预览') {
             const modal = document.getElementById('pdf-modal');
-            const container = document.getElementById('pdf-container');
+            const pages = document.getElementById('pdf-pages');
+            const title = document.getElementById('pdf-title');
+            const progress = document.getElementById('pdf-progress');
+            const renderId = ++activePdfRender;
+
+            activePdf = { src: pdfSrc, title: pdfTitle };
+            pdfScale = window.innerWidth < 768 ? 1 : 1.35;
+            currentPdfPage = 1;
+            currentPdfDocument = null;
+            title.textContent = pdfTitle;
+            progress.textContent = '正在加载文档…';
+            pages.innerHTML = `
+                <div class="min-h-full flex flex-col items-center justify-center text-white/80 py-16">
+                    <i class="ph ph-spinner animate-spin text-[3rem]"></i>
+                    <p class="font-sans text-sm tracking-wider font-medium mt-4">正在加载高清文件…</p>
+                </div>
+            `;
             
             modal.classList.remove('hidden');
+            modal.classList.add('flex');
             void modal.offsetWidth; 
             modal.classList.remove('opacity-0');
             document.body.style.overflow = 'hidden';
 
-            container.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-full text-white/80">
-                    <i class="ph ph-spinner animate-spin text-[3rem] mb-4"></i>
-                    <p class="font-sans text-sm tracking-widest font-medium mt-4">正在加载高清文件...</p>
-                </div>
-            `;
-
-            // 直接采用高可用云端网页内嵌/Google Docs Viewer 渲染方案，彻底规避跨域 403 拦截与 Canvas 渲染慢的问题
-            setTimeout(() => {
-                const googleViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfSrc)}&embedded=true`;
-                container.innerHTML = `
-                    <div class="w-full h-full bg-white rounded-2xl overflow-hidden shadow-2xl relative flex flex-col">
-                        <div class="bg-white/95 backdrop-blur px-4 md:px-6 py-3 border-b border-gray-100 flex justify-between items-center z-[100] absolute top-0 left-0 right-0 shadow-sm">
-                            <span class="text-[13px] font-bold text-navy-900 flex items-center gap-2">
-                                <i class="ph ph-file-pdf text-maroon-700 text-xl"></i> 文档安全预览
-                            </span>
-                            <a href="${pdfSrc}" target="_blank" class="text-[11px] font-bold bg-navy-900 text-white px-4 py-1.5 rounded-full hover:bg-maroon-700 transition-colors shadow-sm flex items-center gap-1.5">
-                                原件直达 <i class="ph ph-arrow-square-out text-sm"></i>
-                            </a>
-                        </div>
-                        <iframe src="${googleViewerUrl}" width="100%" height="100%" frameborder="0" class="absolute inset-0 pt-14"></iframe>
+            try {
+                const pdf = await pdfjsLib.getDocument(pdfSrc).promise;
+                if (renderId !== activePdfRender) return;
+                currentPdfDocument = pdf;
+                await renderCurrentPdfPage(renderId);
+            } catch (error) {
+                if (renderId !== activePdfRender) return;
+                pages.innerHTML = `
+                    <div class="min-h-full flex flex-col items-center justify-center text-center text-white px-6 py-16">
+                        <i class="ph ph-warning-circle text-4xl text-red-300"></i>
+                        <p class="font-sans font-bold mt-4">文档加载失败</p>
+                        <p class="font-sans text-xs text-white/60 mt-2">请刷新网页后重试</p>
                     </div>
                 `;
-            }, 300);
+                progress.textContent = '加载失败';
+                console.error('PDF preview failed:', error);
+            }
         }
 
         function closePdfModal(e) {
             if (e) e.stopPropagation();
             const modal = document.getElementById('pdf-modal');
-            const container = document.getElementById('pdf-container');
+            const pages = document.getElementById('pdf-pages');
+            activePdfRender++;
+            currentPdfDocument = null;
             modal.classList.add('opacity-0');
             document.body.style.overflow = '';
             setTimeout(() => {
                 modal.classList.add('hidden');
-                container.innerHTML = ''; // 清除节点，释放内存
+                modal.classList.remove('flex');
+                pages.innerHTML = '';
             }, 300);
         }
+
+        async function renderCurrentPdfPage(renderId = activePdfRender) {
+            if (!currentPdfDocument || renderId !== activePdfRender) return;
+            const pages = document.getElementById('pdf-pages');
+            const progress = document.getElementById('pdf-progress');
+            progress.textContent = `第 ${currentPdfPage} / ${currentPdfDocument.numPages} 页 · 正在渲染`;
+            const page = await currentPdfDocument.getPage(currentPdfPage);
+            if (renderId !== activePdfRender) return;
+            const baseViewport = page.getViewport({ scale: 1 });
+            const availableWidth = Math.max(280, Math.min(pages.clientWidth - 16, 1100));
+            const fitScale = availableWidth / baseViewport.width;
+            const viewport = page.getViewport({ scale: fitScale * pdfScale });
+            const outputScale = Math.min(window.devicePixelRatio || 1, 2);
+            const canvas = document.createElement('canvas');
+            canvas.className = 'pdf-page';
+            canvas.width = Math.floor(viewport.width * outputScale);
+            canvas.height = Math.floor(viewport.height * outputScale);
+            canvas.style.width = `${viewport.width}px`;
+            canvas.style.height = `${viewport.height}px`;
+            canvas.setAttribute('aria-label', `第 ${currentPdfPage} 页`);
+            pages.innerHTML = '';
+            pages.appendChild(canvas);
+            await page.render({
+                canvasContext: canvas.getContext('2d', { alpha: false }),
+                viewport,
+                transform: outputScale === 1 ? null : [outputScale, 0, 0, outputScale, 0, 0]
+            }).promise;
+            if (renderId !== activePdfRender) return;
+            progress.textContent = `第 ${currentPdfPage} / ${currentPdfDocument.numPages} 页`;
+            pages.scrollTo({ top: 0, left: Math.max(0, (pages.scrollWidth - pages.clientWidth) / 2) });
+            document.getElementById('pdf-prev').disabled = currentPdfPage <= 1;
+            document.getElementById('pdf-next').disabled = currentPdfPage >= currentPdfDocument.numPages;
+        }
+
+        async function changePdfPage(change) {
+            if (!currentPdfDocument) return;
+            currentPdfPage = Math.max(1, Math.min(currentPdfDocument.numPages, currentPdfPage + change));
+            activePdfRender++;
+            await renderCurrentPdfPage(activePdfRender);
+        }
+
+        async function rerenderPdf(scaleChange) {
+            if (!currentPdfDocument) return;
+            pdfScale = Math.max(0.75, Math.min(2, pdfScale + scaleChange));
+            activePdfRender++;
+            await renderCurrentPdfPage(activePdfRender);
+        }
+
+        document.getElementById('pdf-prev').addEventListener('click', () => changePdfPage(-1));
+        document.getElementById('pdf-next').addEventListener('click', () => changePdfPage(1));
+        document.getElementById('pdf-zoom-out').addEventListener('click', () => rerenderPdf(-0.25));
+        document.getElementById('pdf-zoom-in').addEventListener('click', () => rerenderPdf(0.25));
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !document.getElementById('pdf-modal').classList.contains('hidden')) {
+                closePdfModal();
+            }
+        });
 
         // 图片查看器控制逻辑
         function openLightbox(imgSrc) {
