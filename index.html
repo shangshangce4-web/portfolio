@@ -14,13 +14,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Anton&family=Noto+Sans+SC:wght@300;400;500;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script type="module">
-        import * as pdfjsLib from './pdf.min.mjs';
-        pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('./pdf.worker.min.mjs', import.meta.url).href;
-        window.pdfjsLib = pdfjsLib;
-        window.dispatchEvent(new Event('pdfjsready'));
-    </script>
-
     <script>
         tailwind.config = {
             theme: {
@@ -156,6 +149,33 @@
         #pdf-pages {
             overscroll-behavior: contain;
             -webkit-overflow-scrolling: touch;
+        }
+        .mobile-pdf-page-shell {
+            width: min(100%, 900px);
+            margin: 0 auto 1rem;
+            min-height: 160px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 0.65rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mobile-pdf-page-shell::before {
+            content: attr(data-page-label);
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: rgba(255,255,255,0.45);
+            font-size: 0.75rem;
+        }
+        .mobile-pdf-page-shell.mobile-pdf-rendered::before { display: none; }
+        .mobile-pdf-page {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.22);
         }
 
         /* 手机端专项优化 */
@@ -693,10 +713,10 @@
                 </div>
             </div>
             <div class="flex items-center gap-1.5 md:gap-2 shrink-0">
-                <button type="button" id="pdf-zoom-out" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="缩小文档">
+                <button type="button" id="pdf-zoom-out" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center desktop-pdf-control" aria-label="缩小文档">
                     <i class="ph ph-minus text-lg"></i>
                 </button>
-                <button type="button" id="pdf-zoom-in" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="放大文档">
+                <button type="button" id="pdf-zoom-in" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center desktop-pdf-control" aria-label="放大文档">
                     <i class="ph ph-plus text-lg"></i>
                 </button>
                 <button type="button" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" onclick="closePdfModal(event)" aria-label="关闭文档">
@@ -710,22 +730,82 @@
     </div>
 
     <script>
-        // PDF.js 全屏查看器：电脑和手机都留在网页内预览。
+        // 桌面端使用 PDF.js；手机端使用逐页图片，避免手机浏览器解析 PDF 失败。
         let activePdfRender = 0;
         let activePdf = null;
         let pdfScale = 1;
         let currentPdfDocument = null;
         let pdfPageObserver = null;
         let pdfScrollFrame = null;
+        const mobileDocumentSets = {
+            './portfolio-mobile.pdf': { prefix: 'portfolio', pages: 42 },
+            './1、张老师话术框架.pdf': { prefix: 'antique', pages: 4 },
+            './商务鹅绒话术参考(1).pdf': { prefix: 'bosideng', pages: 8 },
+            './开播话术拆解.pdf': { prefix: 'jahver', pages: 8 }
+        };
+        const isMobilePreview = window.matchMedia('(max-width: 767px)').matches || /MicroMessenger|MQQBrowser|QQ\/|Weibo|DingTalk|AlipayClient/i.test(navigator.userAgent);
+
+        function loadDesktopPdfJs() {
+            if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+            if (!window.pdfjsPromise) {
+                window.pdfjsPromise = import('./pdf.min.mjs').then((pdfjsLib) => {
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('./pdf.worker.min.mjs', import.meta.url).href;
+                    window.pdfjsLib = pdfjsLib;
+                    return pdfjsLib;
+                });
+            }
+            return window.pdfjsPromise;
+        }
 
         function waitForPdfJs() {
-            if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
-            return new Promise((resolve, reject) => {
-                const timeout = setTimeout(() => reject(new Error('PDF reader failed to initialize')), 15000);
-                window.addEventListener('pdfjsready', () => {
-                    clearTimeout(timeout);
-                    resolve(window.pdfjsLib);
+            return loadDesktopPdfJs();
+        }
+
+        function buildMobilePdfPages(pdfSrc, renderId) {
+            const pages = document.getElementById('pdf-pages');
+            const progress = document.getElementById('pdf-progress');
+            const config = mobileDocumentSets[pdfSrc];
+            if (!config) throw new Error('Mobile preview asset not found');
+            pages.innerHTML = '';
+            pages.classList.add('mobile-pdf-pages');
+            const shells = [];
+            for (let pageNumber = 1; pageNumber <= config.pages; pageNumber++) {
+                const shell = document.createElement('section');
+                shell.className = 'mobile-pdf-page-shell';
+                shell.dataset.pageNumber = pageNumber;
+                shell.dataset.pageLabel = `第 ${pageNumber} 页`;
+                shell.setAttribute('aria-label', `第 ${pageNumber} 页`);
+                shell.style.aspectRatio = '1.414 / 1';
+                const img = document.createElement('img');
+                img.className = 'mobile-pdf-page';
+                img.alt = `第 ${pageNumber} 页`;
+                img.loading = pageNumber <= 2 ? 'eager' : 'lazy';
+                img.decoding = 'async';
+                img.dataset.src = `./assets/mobile-pdf/flat/${config.prefix}-page-${String(pageNumber).padStart(2, '0')}.jpg`;
+                img.addEventListener('load', () => {
+                    shell.style.aspectRatio = 'auto';
+                    shell.classList.add('mobile-pdf-rendered');
                 }, { once: true });
+                img.addEventListener('error', () => {
+                    shell.dataset.pageLabel = '本页加载失败，请刷新重试';
+                }, { once: true });
+                shell.appendChild(img);
+                pages.appendChild(shell);
+                shells.push(shell);
+            }
+            if (pdfPageObserver) pdfPageObserver.disconnect();
+            pdfPageObserver = new IntersectionObserver((entries) => {
+                for (const entry of entries) {
+                    if (!entry.isIntersecting) continue;
+                    const img = entry.target.querySelector('img');
+                    if (img && !img.src) img.src = img.dataset.src;
+                }
+            }, { root: pages, rootMargin: '1200px 0px', threshold: 0.01 });
+            shells.forEach(shell => pdfPageObserver.observe(shell));
+            progress.textContent = `共 ${config.pages} 页 · 向下滑动查看`;
+            shells.slice(0, 2).forEach(shell => {
+                const img = shell.querySelector('img');
+                if (img && !img.src) img.src = img.dataset.src;
             });
         }
 
@@ -755,6 +835,10 @@
             document.body.style.overflow = 'hidden';
 
             try {
+                if (isMobilePreview) {
+                    buildMobilePdfPages(pdfSrc, renderId);
+                    return;
+                }
                 const pdfReader = await waitForPdfJs();
                 const pdf = await pdfReader.getDocument(pdfSrc).promise;
                 if (renderId !== activePdfRender) return;
@@ -804,6 +888,7 @@
             const shellWidth = sampleViewport.width * fitScale * pdfScale;
             const shellHeight = sampleViewport.height * fitScale * pdfScale;
             pages.innerHTML = '';
+            pages.classList.remove('mobile-pdf-pages');
             for (let pageNumber = 1; pageNumber <= currentPdfDocument.numPages; pageNumber++) {
                 const shell = document.createElement('section');
                 shell.className = 'pdf-page-shell';
