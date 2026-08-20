@@ -749,7 +749,8 @@
             if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
             if (!window.pdfjsPromise) {
                 window.pdfjsPromise = import('./pdf.min.mjs').then((pdfjsLib) => {
-                    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('./pdf.worker.min.mjs', import.meta.url).href;
+                    // This page uses a classic script, so import.meta is not available here.
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('./pdf.worker.min.mjs', window.location.href).href;
                     window.pdfjsLib = pdfjsLib;
                     return pdfjsLib;
                 });
